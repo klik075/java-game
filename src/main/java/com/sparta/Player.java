@@ -51,4 +51,8 @@ public class Player {
     public boolean isAlive() {
         return hp > 0;
     }
+
+    public void gainPotion() {
+        potions++;
+    }
 }
