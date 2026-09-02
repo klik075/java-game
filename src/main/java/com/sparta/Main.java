@@ -16,20 +16,28 @@ public class Main {
             System.out.println("슬라임 왕이 " + bossDamage + " 피해를 준비합니다!");
 
             int choice = menu.choose();
+            Action action = Action.from(choice);
+
             int damageToPlayer = bossDamage;
 
-            if (choice == 1) {
-                int damage = player.attack();
-                slimeKing.takeDamage(damage);
-                System.out.println("내 공격! 슬라임 왕에게 " + damage + " 피해.");
-            } else if (choice == 2) {
-                damageToPlayer = player.defend(bossDamage);
-                System.out.println("방어! " + damageToPlayer + " 피해만 받았습니다.");
-            } else if (player.hasPotion()) {
-                int healed = player.heal();
-                System.out.println("물약 사용! HP를 " + healed + " 회복했습니다.");
-            } else {
-                System.out.println("물약이 없습니다!");
+            switch (action) {
+                case ATTACK -> {
+                    int damage = player.attack();
+                    slimeKing.takeDamage(damage);
+                    System.out.println("내 공격! 슬라임 왕에게 " + damage + " 피해.");
+                }
+                case DEFEND -> {
+                    damageToPlayer = player.defend(bossDamage);
+                    System.out.println("방어! " + damageToPlayer + " 피해만 받았습니다.");
+                }
+                case HEAL -> {
+                    if (player.hasPotion()) {
+                        int healed = player.heal();
+                        System.out.println("물약 사용! HP를 " + healed + " 회복했습니다.");
+                    } else {
+                        System.out.println("물약이 없습니다!");
+                    }
+                }
             }
 
             if (!slimeKing.isAlive()) break;
